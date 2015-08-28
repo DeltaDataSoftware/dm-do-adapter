@@ -266,9 +266,9 @@ module DataMapper
       # @api public
       def initialize(name, uri_or_options)
         super
-
+        normalizeduri_scheme = normalized_uri.scheme.eql?("mysql2")? normalized_uri.scheme.chop : normalized_uri.scheme
         # Default the driver-specific logger to DataMapper's logger
-        if driver_module = DataObjects.const_get(normalized_uri.scheme.capitalize)
+        if driver_module = DataObjects.const_get(normalizeduri_scheme.capitalize)
           driver_module.logger = DataMapper.logger if driver_module.respond_to?(:logger=)
         end
       end
